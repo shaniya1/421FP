@@ -1,4 +1,4 @@
-function[CM] = compositebody_cm(V,xbar,ybar,zbar)
+function[CM] = compositebody_cm(mass)
 %{
 Self, Justin
 California Polytechnic State University, SLO
@@ -16,18 +16,48 @@ INPUTS:  V = vector containing part volumes
          point of interest
 %}
 
-% Input parameters (** USING FOR MASS MOMENT; NOT GEOMETRIC)
+%% Input parameters
+
+% x-bar of each part WITH RESPECT TO (x',y',z'). See schematic. 
+% (x',y',z') = center of mass of the s/c bus. 
+
+bus.xbar = 0;
+Lpanel.xbar = 0;
+Rpanel.xbar = 0;
+sensor.xbar = 0;
+xbar = [bus.xbar; Lpanel.xbar; Rpanel.xbar; sensor.xbar];
+
+% ybar of each part from CM part to CM bus (x',y',z')
+bus.ybar = 0;
+Lpanel.ybar = -2.5;
+Rpanel.ybar = 2.5;
+sensor.ybar = 0;
+ybar = [bus.ybar; Lpanel.ybar; Rpanel.ybar; sensor.ybar];
+
+% zbar of each part from CM part to CM bus (x',y',z')
+bus.zbar = 0;
+Lpanel.zbar = 0;
+Rpanel.zbar = 0;
+sensor.zbar = 1.5;
+zbar = [bus.zbar; Lpanel.zbar; Rpanel.zbar; sensor.zbar];
+
+% x bar, y bar, z bar for each part in composite structure
+xyz_bar = [xbar, ybar zbar];
+
+% Now get to business
+xbar = xyz_bar(:,1);
+ybar = xyz_bar(:,2);
+zbar = xyz_bar(:,3);
 
 % Vixi, Aiyi, Aizi
-for i = 1:length(V)
-    Vixi(i) = V(i)*xbar(i);
-    Viyi(i) = V(i)*ybar(i);
-    Vizi(i) = V(i)*zbar(i);
+for i = 1:length(mass)
+    Vixi(i) = mass(i)*xbar(i);
+    Viyi(i) = mass(i)*ybar(i);
+    Vizi(i) = mass(i)*zbar(i);
 end
 
 % Finally, solving for (xbar,ybar) of COMPOSITE body
-CM(1) = sum(Vixi) / sum(V);
-CM(2) = sum(Viyi) / sum(V);
-CM(3) = sum(Vizi) / sum(V);
+CM(1) = sum(Vixi) / sum(mass);
+CM(2) = sum(Viyi) / sum(mass);
+CM(3) = sum(Vizi) / sum(mass);
 
-end % end function
