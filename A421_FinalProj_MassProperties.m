@@ -1,4 +1,4 @@
-function A421_FinalProj_MassProperties
+% function A421_FinalProj_MassProperties
 %{
 Self, Justin
 California Polytechnic State University, SLO
@@ -67,7 +67,7 @@ disp("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 [normal.cm] = compositebody_cm(mass);
 
 % Call function to find J_Normal_Operations
-[J.normal] = find_J_normalops(mass,L,normal.cm);
+[normal.J] = find_J_normalops(mass,L,normal.cm);
 
 % Print results
 disp("Spacecraft mass is: " + totalmass + " kg (NORMAL PHASE)")
@@ -75,8 +75,8 @@ disp("Center of mass [meters] for NORMAL OPERATIONS relative to bus center is: "
 disp(normal.cm')
 
 disp("Inertia Matrix [kg*m2] of s/c about CM (in NORMAL OPS) is: ")
-disp(J.normal)
+disp(normal.J)
 
 %% Deliverable 2: April 21, 2023 | Torque-Free Motion
-
+[initialState,Torque,tspan,InertiaMatrix] = A421_torqueFreeMotion(normal.J);
 % Stuff here.
