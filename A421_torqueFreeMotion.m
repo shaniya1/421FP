@@ -66,40 +66,41 @@ Torque = 0; % torque free motion
 % tolerance
 options = odeset('RelTol',1e-8,'AbsTol',1e-8);
 
-[tnew,StateNew] = ode45(@motionSim,tspan,initialState,options,InertiaMatrix,Torque);
-
-figure
-subplot(3,1,1)
-plot(tnew,StateNew(:,1))
-hold on
-plot(tnew,StateNew(:,2))
-plot(tnew,StateNew(:,3))
-title("Angular Velocity as Function of Time")
-xlabel("Time [sec]")
-ylabel("Angular Velocity [rad/sec]")
-legend("\omega_x","\omega_y","\omega_z",'Location','eastoutside')
-grid on
-
-subplot(3,1,2)
-plot(tnew,StateNew(:,7))
-hold on
-plot(tnew,StateNew(:,8))
-plot(tnew,StateNew(:,9))
-plot(tnew,StateNew(:,10))
-title("Quaternion as Function of Time")
-xlabel("Time [sec]")
-ylabel("Quaternions")
-legend("\epsilon_x","\epsilon_y","\epsilon_z","\eta",'Location','eastoutside')
-grid on
-
-subplot(3,1,3)
-plot(tnew,rad2deg(StateNew(:,4))) % convert from [rad] to [deg]
-hold on
-plot(tnew,rad2deg(StateNew(:,5)))
-plot(tnew,rad2deg(StateNew(:,6)))
-title("Euler Angles as Functions of Time")
-xlabel("Time [sec]")
-ylabel("Angle [deg]")
-legend("\phi(t)","\theta(t)","\psi(t)",'Location','eastoutside')
-grid on
-sgtitle("MATLAB Solved Plots")
+%% UNCOMMENT this section to solve the ODE without using simulink
+% [tnew,StateNew] = ode45(@motionSim,tspan,initialState,options,InertiaMatrix,Torque);
+% 
+% figure
+% subplot(3,1,1)
+% plot(tnew,StateNew(:,1))
+% hold on
+% plot(tnew,StateNew(:,2))
+% plot(tnew,StateNew(:,3))
+% title("Angular Velocity as Function of Time")
+% xlabel("Time [sec]")
+% ylabel("Angular Velocity [rad/sec]")
+% legend("\omega_x","\omega_y","\omega_z",'Location','eastoutside')
+% grid on
+% 
+% subplot(3,1,2)
+% plot(tnew,StateNew(:,7))
+% hold on
+% plot(tnew,StateNew(:,8))
+% plot(tnew,StateNew(:,9))
+% plot(tnew,StateNew(:,10))
+% title("Quaternion as Function of Time")
+% xlabel("Time [sec]")
+% ylabel("Quaternions")
+% legend("\epsilon_x","\epsilon_y","\epsilon_z","\eta",'Location','eastoutside')
+% grid on
+% 
+% subplot(3,1,3)
+% plot(tnew,rad2deg(StateNew(:,4))) % convert from [rad] to [deg]
+% hold on
+% plot(tnew,rad2deg(StateNew(:,5)))
+% plot(tnew,rad2deg(StateNew(:,6)))
+% title("Euler Angles as Functions of Time")
+% xlabel("Time [sec]")
+% ylabel("Angle [deg]")
+% legend("\phi(t)","\theta(t)","\psi(t)",'Location','eastoutside')
+% grid on
+% sgtitle("MATLAB Solved Plots")

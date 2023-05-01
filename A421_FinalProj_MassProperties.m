@@ -79,4 +79,37 @@ disp(normal.J)
 
 %% Deliverable 2: April 21, 2023 | Torque-Free Motion
 [initialState,Torque,tspan,InertiaMatrix] = A421_torqueFreeMotion(normal.J);
-% Stuff here.
+
+simData = sim("A421_FP_pt2_model.slx");
+
+angVeloc = simData.ScopeData.signals(1).values; % [rad/sec]
+eulerAng = simData.ScopeData.signals(2).values; % [rad]
+quaternion = simData.ScopeData.signals(3).values;
+timeVect = simData.tout;
+
+% Plots
+figure
+subplot(3,1,1)
+plot(timeVect,angVeloc)
+title("Angular Velocity as Function of Time")
+xlabel("Time [sec]")
+ylabel("Angular Velocity [rad/sec]")
+legend("\omega_x","\omega_y","\omega_z",'Location','eastoutside')
+grid on
+
+subplot(3,1,2)
+plot(timeVect,quaternion)
+title("Quaternion as Function of Time")
+xlabel("Time [sec]")
+ylabel("Quaternions")
+legend("\epsilon_x","\epsilon_y","\epsilon_z","\eta",'Location','eastoutside')
+grid on
+
+subplot(3,1,3)
+plot(timeVect,rad2deg(eulerAng))
+title("Euler Angles as Functions of Time")
+xlabel("Time [sec]")
+ylabel("Angle [deg]")
+legend("\phi(t)","\theta(t)","\psi(t)",'Location','eastoutside')
+grid on
+sgtitle("Simulink Solved Plots")
