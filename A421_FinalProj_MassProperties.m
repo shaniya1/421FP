@@ -116,7 +116,7 @@ sgtitle("Simulink Solved Plots")
 
 %% Deliverable 3: May 5, 2023 | Detumble Simulation
 
-detumble.w_b_ECI = [-0.05;0.03;02]; % rad/sec
+detumble.w_b_ECI = [-0.05;0.03;0.2]; % rad/sec
 detumble.initialState = [detumble.w_b_ECI;initialState(4:10)];
 detumble.k = 0.2; % Gain Selection code needed
 detumble.deltaT = 5*100*60; % sec
@@ -129,9 +129,9 @@ detumble.quaternion = detumbleSim.ScopeData.signals(3).values;
 detumble.torque = detumbleSim.ScopeData.signals(4).values; % N
 detumble.timeVect = detumbleSim.tout;
 
-% Plots
+%% Plots
 figure
-subplot(4,1,1)
+subplot(3,1,1)
 plot(detumble.timeVect,detumble.angVeloc)
 title("Angular Velocities")
 xlabel("Time [sec]")
@@ -139,7 +139,7 @@ ylabel("Angular Velocity [rad/sec]")
 legend("\omega_x","\omega_y","\omega_z",'Location','eastoutside')
 grid on
 
-subplot(4,1,2)
+subplot(3,1,2)
 plot(detumble.timeVect,detumble.quaternion)
 title("Quaternions")
 xlabel("Time [sec]")
@@ -147,7 +147,7 @@ ylabel("Quaternion Parameter")
 legend("\epsilon_x","\epsilon_y","\epsilon_z","\eta",'Location','eastoutside')
 grid on
 
-subplot(4,1,3)
+subplot(3,1,3)
 plot(detumble.timeVect,rad2deg(detumble.eulerAng))
 title("Euler Angles")
 xlabel("Time [sec]")
@@ -155,9 +155,11 @@ ylabel("Angle [deg]")
 legend("\phi(t)","\theta(t)","\psi(t)",'Location','eastoutside')
 grid on
 
-subplot(4,1,4)
+% subplot(4,1,4)
+figure
 plot(detumble.timeVect,detumble.torque)
 title("Thruster Torque")
 xlabel("Time [sec]")
 ylabel("Troque [N]")
 legend("T_x","T_y","T_z",'Location','eastoutside')
+grid on
