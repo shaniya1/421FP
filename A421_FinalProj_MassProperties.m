@@ -112,13 +112,13 @@ xlabel("Time [sec]")
 ylabel("Angle [deg]")
 legend("\phi(t)","\theta(t)","\psi(t)",'Location','eastoutside')
 grid on
-sgtitle("Simulink Solved Plots")
+sgtitle("Normal Ops. Torque-Free Motion")
 
 %% Deliverable 3: May 5, 2023 | Detumble Simulation
 
 detumble.w_b_ECI = [-0.05;0.03;0.2]; % rad/sec
 detumble.initialState = [detumble.w_b_ECI;initialState(4:10)];
-detumble.k = 0.2; % Gain Selection code needed
+detumble.k = 0.2; % Produces reasonable (small) torque values 
 detumble.deltaT = 5*100*60; % sec
 
 detumbleSim = sim("A421_FP_pt3_model.slx");
@@ -129,7 +129,7 @@ detumble.quaternion = detumbleSim.ScopeData.signals(3).values;
 detumble.torque = detumbleSim.ScopeData.signals(4).values; % N
 detumble.timeVect = detumbleSim.tout;
 
-%% Plots
+% Plots
 figure
 subplot(3,1,1)
 plot(detumble.timeVect,detumble.angVeloc)
@@ -152,7 +152,7 @@ plot(detumble.timeVect,rad2deg(detumble.eulerAng))
 title("Euler Angles")
 xlabel("Time [sec]")
 ylabel("Angle [deg]")
-legend("\phi(t)","\theta(t)","\psi(t)",'Location','eastoutside')
+legend("\phi","\theta","\psi",'Location','eastoutside')
 grid on
 
 % subplot(4,1,4)
@@ -160,6 +160,6 @@ figure
 plot(detumble.timeVect,detumble.torque)
 title("Thruster Torque")
 xlabel("Time [sec]")
-ylabel("Troque [N]")
+ylabel("Torque [N]")
 legend("T_x","T_y","T_z",'Location','eastoutside')
 grid on
